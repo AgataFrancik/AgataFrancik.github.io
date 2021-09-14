@@ -45,6 +45,13 @@
         let ballSpeedX = -1;
         let ballSpeedY = 1;
 
+        var sndHit = new Audio("hit.mp3");
+        var sndLose = new Audio("lose.mp3");
+        var sndWin = new Audio("win.mp3");
+        sndWin.autoplay = false;
+        sndLose.autoplay = false;
+        sndHit.autoplay = false;
+
         function player()
         {
             ctx.fillStyle = 'gray';
@@ -158,12 +165,14 @@
             if((ballY + ballSize/2 >= playerY) && (ballY <= playerY + paddleHight )&&( ballX <= playerX + paddleWidth))
             {
                 ballSpeedY *= -1;
-                ballSpeedX *= -1;
+                ballSpeedX *= -1.2;
+                sndHit.play();
             }
             if((ballY + ballSize/2 >= AIY) && (ballY <= AIY + paddleHight )&&( ballX + ballSize >= AIX))
             {
                 ballSpeedY *= -1;
-                ballSpeedX *= -1;
+                ballSpeedX *= -1.2;
+                sndHit.play();
             }
         }
 
@@ -173,10 +182,12 @@
             {
                 alert("Player win");
                 clearInterval(Render);
+                sndWin.play();
             }
             else if(ballX <= 0)
             {
                 alert("Ai win");
+                sndLose.play();
                 clearInterval(Render);
             }
         }
