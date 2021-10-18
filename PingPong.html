@@ -52,6 +52,8 @@
         sndLose.autoplay = false;
         sndHit.autoplay = false;
 
+        const startTime = new Date().getTime();
+
         function player()
         {
             ctx.fillStyle = 'gray';
@@ -76,11 +78,7 @@
                 ballSpeedY *= -1;
                 SpeedUp();
             }
-            if(ballX <= 0 || ballX + ballSize >= cw)
-            {
-                ballSpeedX *= -1;
-                SpeedUp();
-            }
+            
 
         }
 
@@ -180,16 +178,21 @@
         {
             if(ballX + ballSize >= cw)
             {
-                alert("Player win");
+                const endTime = new Date().getTime();
+                alert(`Player win. Time: ${gameTime} sec`);
+                const gameTime = Math.round((endTime - startTime)/1000);
                 clearInterval(Render);
                 sndWin.play();
             }
             else if(ballX <= 0)
             {
-                alert("Ai win");
+                const endTime = new Date().getTime();
+                const gameTime = Math.round((endTime - startTime)/1000);
+                alert(`Ai win. Time: ${gameTime} sec`);
                 sndLose.play();
                 clearInterval(Render);
             }
+
         }
 
         canv.addEventListener("mousemove", playerPosition)
