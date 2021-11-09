@@ -6,23 +6,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ping Pong</title>
     <style>
-        * {
+        *{
+            font-family: 'Quicksand', sans-serif;
+            color: floralwhite;
+            background-color: darkslategray;
+        }
+        a.titlelink{
+            display: block;
+            text-decoration: none;
+        }
+        a.tilelinkhtml5
+        {
+            text-decoration: none;
+        }
+        .canva {
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             background-color: darkslategray;
+            float: left;
+        }
+        #container{
+            margin-left: auto;
+	        margin-right:auto;
+        }
+        #Menu{
+            height: 88px;
+            display: flex;
+            background-color: rgb(18, 34, 34);
+            text-align: center;
+        }
+        #button{
+            text-align: center;
+            font-size: 50px;
+            cursor: pointer;
+            margin: 3px;
+            float: left;
+            border: solid, 3px;
+            width: 369px;
+            height: 82px;
+            display: flex;
+            background-color: rgb(0, 10, 10);
+        }
+        #reset{
+            text-align: center;
+            font-size: 50px;
+            cursor: pointer;
+            margin: 3px;
+            float: left;
+            border: solid, 3px;
+            width: 369px;
+            height: 82px;
+            display: flex;
+            background-color: rgb(0, 10, 10);
+        }
+        #points{
+            text-align: center;
+            font-size: 50px;
+            cursor: pointer;
+            margin: 3px;
+            float: left;
+            border: solid, 3px;
+            width: 369px;
+            height: 82px;
+            display: flex;
+            background-color: rgb(0, 10, 10);
         }
     </style>
 </head>
 <body>
-    <canvas id="canva"></canvas>
+    <div id="container">
+        <canvas id="canva"></canvas>
+        <div id="Menu">
+            <div id="points">Points</div>
+            <div id="button">Time</div>
+            <div id="reset">Reset</div>
+            <div id="button"> <a href="PingPongMenu.html">Back</a></div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
     <script>
         const canv = document.querySelector('canvas');
         const ctx = canv.getContext('2d');
-        canv.width = 900;
-        canv.height = 500;
+        reset = document.getElementById("reset").innerHTML;
+        canv.width = 1500;
+        canv.height = 650;
 
         const cw = canv.width;
         const ch = canv.height;
@@ -34,7 +104,7 @@
         const paddleWidth = 20;
 
         const playerX = 70;
-        const AIX = 810;
+        const AIX = 1430;
 
         let playerY = 200;
         let AIY = 200;
@@ -55,6 +125,8 @@
         const startTime = new Date().getTime();
 
         let points=0;
+        let pointName= "Points: " + points;
+        document.getElementById("points").innerHTML = pointName;
 
         function player()
         {
@@ -168,6 +240,9 @@
                 ballSpeedX *= -1.2;
                 sndHit.play();
                 points++;
+                pointName= "Points: " + points;
+                document.getElementById("points").innerHTML = pointName;
+
             }
             if((ballY + ballSize/2 >= AIY) && (ballY <= AIY + paddleHight )&&( ballX + ballSize >= AIX))
             {
