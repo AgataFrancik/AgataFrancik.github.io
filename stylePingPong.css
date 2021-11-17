@@ -1,0 +1,90 @@
+*{
+    font-family: 'Quicksand', sans-serif;
+    color: floralwhite;
+    background-color: darkslategray;
+}
+a.titlelink{
+    display: block;
+    text-decoration: none;
+}
+a.tilelinkhtml5
+{
+    text-decoration: none;
+}
+.canva {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: darkslategray;
+    float: left;
+}
+#container{
+    margin-left: auto;
+    margin-right:auto;
+}
+#Menu{
+    height: 88px;
+    display: flex;
+    background-color: rgb(18, 34, 34);
+    text-align: center;
+}
+#button{
+    text-align: center;
+    font-size: 50px;
+    cursor: pointer;
+    margin: 3px;
+    float: left;
+    border: solid, 3px;
+    width: 295px;
+    height: 80px;
+    display: flex;
+    background-color: rgb(0, 10, 10);
+}
+#reset{
+    text-align: center;
+    font-size: 50px;
+    cursor: pointer;
+    margin: 3px;
+    float: left;
+    border: solid, 3px;
+    width: 295px;
+    height: 80px;
+    display: flex;
+    background-color: rgb(0, 10, 10);
+}
+#points{
+    text-align: center;
+    font-size: 50px;
+    margin: 3px;
+    float: left;
+    border: solid, 3px;
+    width: 295px;
+    height: 80px;
+    display: flex;
+    background-color: rgb(0, 10, 10);
+}
+#time{
+    text-align: center;
+    font-size: 50px;
+    margin: 3px;
+    float: left;
+    border: solid, 3px;
+    width: 295px;
+    height: 80px;
+    display: flex;
+    background-color: rgb(0, 10, 10);
+}
+#StartButton{
+    background-color: firebrick;
+    text-align: center;
+    font-size: 50px;
+    border: solid, 3px;
+    margin: 3px;
+    float: left;
+    display: flex;
+    cursor: pointer;
+    width: 295px;
+    height: 80px;
+}
