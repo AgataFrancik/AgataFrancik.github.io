@@ -39,6 +39,7 @@ const canv = document.querySelector('canvas');
         let points=0;
         let pointName= "Points: " + points;
         document.getElementById("points").innerHTML = pointName;
+        
 
         function player()
         {
@@ -123,42 +124,27 @@ const canv = document.querySelector('canvas');
             //AIY = playerY;
         }
 
-        function aiPosition()
+        const aiPosition = (e) =>
         {
-            var middlePaddel = AIY + paddleHight/2;
-            var middleBall = ballY + ballSize/2;
-            if (ballX > 500)
+            //console.log(e.keyCode);
+            if(e.keyCode == 87)
             {
-                if (middlePaddel - middleBall > 200)
-                {
-                    AIY -= 15; 
-                }
-                else if (middlePaddel - middleBall > 50)
-                {
-                    AIY -= 5;
-                }
-                else if (middlePaddel - middleBall < -200)
-                {
-                    AIY += 15;
-                }
-                else if (middlePaddel - middleBall < -50)
-                {
-                    AIY += 5;
-                }
+                AIY -=10;
             }
-            else if(ballX <= 500 && ballX >150)
+            else if(e.keyCode == 83)
             {
-                if (middlePaddel - middleBall > 100)
-                {
-                    AIY -= 3; 
-                }
-                else  if (middlePaddel - middleBall > -100)
-                {
-                    AIY += 3; 
-                }
+                AIY +=10;
+            }
+            if(AIY >= ch - paddleHight)
+            {
+                AIY = ch - paddleHight;
+            }
+            if(AIY <=0)
+            {
+                AIY = 0;
             }
         }
-
+        
         function collision()
         {
             if((ballY + ballSize/2 >= playerY) && (ballY <= playerY + paddleHight )&&( ballX <= playerX + paddleWidth))
@@ -216,12 +202,13 @@ const canv = document.querySelector('canvas');
         canv.addEventListener("mousemove", playerPosition)
         reset.addEventListener("click", resetGame)
         startGame.addEventListener("click", start)
+        window.addEventListener("keydown", aiPosition)
         function game() {
         table()
         ball()
         player()
         AI()
-        aiPosition()
+        //aiPosition()
         collision()
         win()
         }
@@ -235,4 +222,3 @@ const canv = document.querySelector('canvas');
         }
         game();
         document.getElementById("time").innerHTML = "Time: 0:0";
-
