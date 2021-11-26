@@ -37,6 +37,22 @@ function playerPosition(e){
     {
         playerX += 10;
     }
+    if(playerY >= ch - playerHeight)
+    {
+        playerY = ch - playerHeight;
+    }
+    if(playerY < 0)
+    {
+        playerY = 0;
+    }
+    if(playerX >= cw - playerWidth)
+    {
+        playerX = cw - playerWidth;
+    }
+    if(playerX < 0)
+    {
+        playerX = 0;
+    }
 }
 window.addEventListener("keydown", playerPosition)
 function game() {

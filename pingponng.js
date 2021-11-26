@@ -233,7 +233,7 @@
             Render = setInterval(game,1000/60);
             startGame.removeEventListener("click", start);
         }
-        //game();
-        start();
+        game();
+        //start();
         document.getElementById("time").innerHTML = "Time: 0:0";
 
