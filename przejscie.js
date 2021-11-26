@@ -54,10 +54,19 @@ function playerPosition(e){
         playerX = 0;
     }
 }
+function win()
+{
+    if(playerY <= 0)
+    {
+        alert(`You win!`);
+        clearInterval(Render);
+    }
+}
 window.addEventListener("keydown", playerPosition)
 function game() {
 board()
 player()
+win()
 }
 var Render;
 function start(){
