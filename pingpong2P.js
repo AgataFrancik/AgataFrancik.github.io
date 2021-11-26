@@ -77,7 +77,7 @@ const canv = document.querySelector('canvas');
             if(gameTimeName >60)
             {
                 min++;
-                gameTimeName= gameTimeName-60;
+                gameTimeName= gameTimeName - 60;
             }
 	        document.getElementById("time").innerHTML = "Time: " + min + ":" + gameTimeName;
 	        setTimeout("count()",1000);

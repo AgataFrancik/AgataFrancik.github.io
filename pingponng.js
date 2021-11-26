@@ -1,4 +1,4 @@
-const canv = document.querySelector('canvas');
+        const canv = document.querySelector('canvas');
         const ctx = canv.getContext('2d');
         const reset = document.getElementById('reset');
         const startGame = document.getElementById('StartButton');
@@ -233,6 +233,7 @@ const canv = document.querySelector('canvas');
             Render = setInterval(game,1000/60);
             startGame.removeEventListener("click", start);
         }
-        game();
+        //game();
+        start();
         document.getElementById("time").innerHTML = "Time: 0:0";
 

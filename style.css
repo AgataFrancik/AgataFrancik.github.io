@@ -76,6 +76,14 @@ a.tilelink:hover{
 	align-items: center;
 	align-content: center;
 }
+#napisInfo
+{
+	font-size: 30px;
+	margin-top: auto;
+	margin-bottom: auto;
+	align-items: center;
+	align-content: center;
+}
 #button1
 {
 	width: 30%;
