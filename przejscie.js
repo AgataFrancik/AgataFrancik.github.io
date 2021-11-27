@@ -7,8 +7,15 @@ const cw = canv.width;
 const ch = canv.height;
 let playerX = 760;
 let playerY = 630;
+
+let enemyX = 0;
+let enemyY = 610;
+
 const playerWidth = 20;
 const playerHeight = 20;
+
+var OneBlockSize = 20;
+var enemySize = 0;
 
 function board(){
     ctx.fillStyle = 'gray';
@@ -62,15 +69,36 @@ function win()
         clearInterval(Render);
     }
 }
+function renderEnemy()
+{
+    enemySize = Math.floor(Math.random()*5+1) * OneBlockSize;
+    return enemySize;
+}
+function enemy()
+{
+    //enemyS = renderEnemy();
+    ctx.fillStyle = 'red';
+    ctx.fillRect(enemyX, enemyY, enemySize , OneBlockSize);
+}
+function enemyMoveRight()
+{
+    enemyX += 5;
+}
 window.addEventListener("keydown", playerPosition)
 function game() {
 board()
 player()
 win()
 }
+function enemyController(){
+    enemy()
+    enemyMoveRight()
+}
 var Render;
+var RenderEnemy;
 function start(){
     Render = setInterval(game,1000/60);
+    RenderEnemy = setInterval(enemyController, 1000/60)
 }
-//game();
+renderEnemy();
 start();
