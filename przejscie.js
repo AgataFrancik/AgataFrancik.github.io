@@ -5,6 +5,8 @@ canv.width = 1500;
 canv.height = 650;
 const cw = canv.width;
 const ch = canv.height;
+var fps = 60;
+var allEnemies = []
 
 var player = {
     playerX: 760,
@@ -91,20 +93,32 @@ function enemyMoveRight()
     enemy.enemyX += 5;
 }
 window.addEventListener("keydown", playerPosition)
-function game() {
-board()
-playerFunc()
-win()
+renderEnemy()
+LastTime = 0;
+game()
+//enemyController()
+
+function game( time ) {
+    requestAnimationFrame(game)  
+    if (time - LastTime>=1000/fps)  {
+        LastTime = time;
+        board()
+        enemyFunc()
+        enemyMoveRight()
+        playerFunc()
+        win()
+    }
 }
 function enemyController(){
+    requestAnimationFrame(enemyController)
     enemyFunc()
     enemyMoveRight()
 }
-var Render;
-var RenderEnemy;
-function start(){
-    Render = setInterval(game,1000/60);
-    RenderEnemy = setInterval(enemyController, 1000/60)
-}
-renderEnemy();
-start();
+//var Render;
+//var RenderEnemy;
+//function start(){
+  //  Render = setInterval(game,1000/60);
+   // RenderEnemy = setInterval(enemyController, 1000/60)
+//}
+//renderEnemy();
+//start();
