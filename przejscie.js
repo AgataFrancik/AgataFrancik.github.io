@@ -5,93 +5,99 @@ canv.width = 1500;
 canv.height = 650;
 const cw = canv.width;
 const ch = canv.height;
-let playerX = 760;
-let playerY = 630;
 
-let enemyX = 0;
-let enemyY = 610;
+var player = {
+    playerX: 760,
+    playerY: 630,
+    playerWidth: 20,
+    playerHeight: 20,
+}
 
-const playerWidth = 20;
-const playerHeight = 20;
 
-var OneBlockSize = 20;
-var enemySize = 0;
+var enemy = {
+    enemySize: 0,
+    enemyX: 0,
+    enemyY: 610,
+    OneBlockSize: 20,
+}
+
 
 function board(){
     ctx.fillStyle = 'gray';
     ctx.fillRect(0, 0, cw, ch);
 }
-function player()
+function playerFunc()
 {
     ctx.fillStyle = 'white';
-    ctx.fillRect(playerX, playerY, playerWidth, playerHeight);
+    ctx.fillRect(player.playerX, player.playerY, player.playerWidth, player.playerHeight);
 }
 function playerPosition(e){
     console.log(e.keyCode);
     if(e.keyCode == 87)
     {
-        playerY -= 10;
+        player.playerY -= 10;
     }
     if(e.keyCode == 83)
     {
-        playerY += 10;
+        player.playerY += 10;
     }
     if(e.keyCode == 65)
     {
-        playerX -= 10;
+        player.playerX -= 10;
     }
     if(e.keyCode == 68)
     {
-        playerX += 10;
+        player.playerX += 10;
     }
-    if(playerY >= ch - playerHeight)
+    if(player.playerY >= ch - player.playerHeight)
     {
-        playerY = ch - playerHeight;
+        player.playerY = ch - playerHeight;
     }
-    if(playerY < 0)
+    if(player.playerY < 0)
     {
-        playerY = 0;
+        player.playerY = 0;
     }
-    if(playerX >= cw - playerWidth)
+    if(player.playerX >= cw - player.playerWidth)
     {
-        playerX = cw - playerWidth;
+        player.playerX = cw - playerWidth;
     }
-    if(playerX < 0)
+    if(player.playerX < 0)
     {
-        playerX = 0;
+        player.playerX = 0;
     }
 }
 function win()
 {
-    if(playerY <= 0)
+    if(player.playerY <= 0)
     {
         alert(`You win!`);
         clearInterval(Render);
     }
+    //if(enemyX)
 }
 function renderEnemy()
 {
-    enemySize = Math.floor(Math.random()*5+1) * OneBlockSize;
-    return enemySize;
+    enemy.enemySize = Math.floor(Math.random()*5+1) * enemy.OneBlockSize;
+    return enemy.enemySize;
 }
-function enemy()
+function enemyFunc()
 {
     //enemyS = renderEnemy();
     ctx.fillStyle = 'red';
-    ctx.fillRect(enemyX, enemyY, enemySize , OneBlockSize);
+    ctx.fillRect(enemy.enemyX, enemy.enemyY, enemy.enemySize , enemy.OneBlockSize);
 }
 function enemyMoveRight()
 {
-    enemyX += 5;
+    enemy.enemyX += 5;
 }
 window.addEventListener("keydown", playerPosition)
 function game() {
 board()
-player()
+playerFunc()
 win()
 }
 function enemyController(){
-    enemy()
+    enemyFunc()
     enemyMoveRight()
 }
 var Render;
