@@ -23,13 +23,16 @@ function game( time ) {
         LastTime = time;
         board()
         if(create){
+         for(var i=0; i<6;i++){  
         allEnemies.push({
             enemySize: 0,
-            enemyX: 0,
-            enemyY: 610,
-            OneBlockSize: 20
+            enemyX:   (i%2?0:cw), //0, //jak parzyste albo nieparzyste
+            enemyY: i*95+75,   //610, //i*iles, policz ile
+            OneBlockSize: 20,
+            right: (i%2?true:false)
         })
         renderEnemy()   
+    }
     }
     //if(allEnemies.length>1)
       //  {
@@ -41,6 +44,7 @@ function game( time ) {
            // }
        // }
        // else
+       
      if(allEnemies[allEnemies.length-1].enemyX>=120){
             create = true
         }
@@ -50,6 +54,7 @@ function game( time ) {
     for(var i=0; i<allEnemies.length;i++){
         var enemy = allEnemies[i];
         enemyFunc(enemy)
+        enemyDel(enemy)
         //enemyMoveRight()
     }
         playerFunc()
@@ -119,8 +124,19 @@ function renderEnemy()
 function enemyFunc(enemy)
 {
     ctx.fillStyle = 'red';
+    if(enemy.right){
     enemy.enemyX += 1.5;
+    }
+    else{
+        enemy.enemyX -=1.5;
+    }
     ctx.fillRect(enemy.enemyX, enemy.enemyY, enemy.enemySize , enemy.OneBlockSize);
+}
+function enemyDel(enemy){
+    if(enemy.enemyX>cw){
+        allEnemies.shift();
+        //console.log(allEnemies.length)
+    }
 }
 //function enemyMoveRight()
 //{
