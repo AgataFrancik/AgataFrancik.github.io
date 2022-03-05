@@ -7,7 +7,7 @@ const cw = canv.width;
 const ch = canv.height;
 var fps = 60;
 var allEnemies = []
-
+var create = true
 var player = {
     playerX: 760,
     playerY: 630,
@@ -16,11 +16,45 @@ var player = {
 }
 
 
-var enemy = {
-    enemySize: 0,
-    enemyX: 0,
-    enemyY: 610,
-    OneBlockSize: 20,
+function game( time ) {
+    requestAnimationFrame(game)  
+    
+    if (time - LastTime>=1000/fps)  {
+        LastTime = time;
+        board()
+        if(create){
+        allEnemies.push({
+            enemySize: 0,
+            enemyX: 0,
+            enemyY: 610,
+            OneBlockSize: 20
+        })
+        renderEnemy()   
+    }
+    //if(allEnemies.length>1)
+      //  {
+       //     if(allEnemies[allEnemies.length-1].enemyX+allEnemies[allEnemies.length-1].enemySize - allEnemies[allEnemies.length-2].enemyX <= -50) { 
+        //        create = true
+         //   }
+         //   else{
+          //      create = false
+           // }
+       // }
+       // else
+     if(allEnemies[allEnemies.length-1].enemyX>=120){
+            create = true
+        }
+        else{
+            create = false
+        }
+    for(var i=0; i<allEnemies.length;i++){
+        var enemy = allEnemies[i];
+        enemyFunc(enemy)
+        //enemyMoveRight()
+    }
+        playerFunc()
+        win()
+    }
 }
 
 
@@ -79,36 +113,29 @@ function win()
 }
 function renderEnemy()
 {
-    enemy.enemySize = Math.floor(Math.random()*5+1) * enemy.OneBlockSize;
-    return enemy.enemySize;
+    allEnemies[allEnemies.length-1].enemySize = Math.floor(Math.random()*5+1) * allEnemies[allEnemies.length-1].OneBlockSize;
+    return allEnemies[allEnemies.length-1].enemySize;
 }
-function enemyFunc()
+function enemyFunc(enemy)
 {
-    //enemyS = renderEnemy();
     ctx.fillStyle = 'red';
+    enemy.enemyX += 1.5;
     ctx.fillRect(enemy.enemyX, enemy.enemyY, enemy.enemySize , enemy.OneBlockSize);
 }
-function enemyMoveRight()
-{
-    enemy.enemyX += 5;
-}
+//function enemyMoveRight()
+//{
+ //   allEnemies[allEnemies.length-1].enemyX += 1;
+//}
+
+
 window.addEventListener("keydown", playerPosition)
-renderEnemy()
+
 LastTime = 0;
 game()
+renderEnemy()
 //enemyController()
 
-function game( time ) {
-    requestAnimationFrame(game)  
-    if (time - LastTime>=1000/fps)  {
-        LastTime = time;
-        board()
-        enemyFunc()
-        enemyMoveRight()
-        playerFunc()
-        win()
-    }
-}
+
 function enemyController(){
     requestAnimationFrame(enemyController)
     enemyFunc()
