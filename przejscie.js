@@ -26,8 +26,8 @@ function game( time ) {
          for(var i=0; i<6;i++){  
         allEnemies.push({
             enemySize: 0,
-            enemyX:   (i%2?0:cw), //0, //jak parzyste albo nieparzyste
-            enemyY: i*95+75,   //610, //i*iles, policz ile
+            enemyX:   (i%2?-100:cw), 
+            enemyY: (i%2?i*95+75:i*95+80),   
             OneBlockSize: 20,
             right: (i%2?true:false)
         })
@@ -45,7 +45,7 @@ function game( time ) {
        // }
        // else
        
-     if(allEnemies[allEnemies.length-1].enemyX>=120){
+     if(allEnemies[allEnemies.length-1].enemyX>=20){
             create = true
         }
         else{
@@ -55,9 +55,11 @@ function game( time ) {
         var enemy = allEnemies[i];
         enemyFunc(enemy)
         enemyDel(enemy)
+        crash(enemy)
         //enemyMoveRight()
     }
         playerFunc()
+        
         win()
     }
 }
@@ -133,16 +135,23 @@ function enemyFunc(enemy)
     ctx.fillRect(enemy.enemyX, enemy.enemyY, enemy.enemySize , enemy.OneBlockSize);
 }
 function enemyDel(enemy){
-    if(enemy.enemyX>cw){
+
+    if(enemy.right && enemy.enemyX>cw || !enemy.right && enemy.enemyX+enemy.enemySize<0){
         allEnemies.shift();
         //console.log(allEnemies.length)
     }
 }
-//function enemyMoveRight()
-//{
- //   allEnemies[allEnemies.length-1].enemyX += 1;
-//}
-
+function crash(enemy){
+    if(enemy.enemyY + enemy.OneBlockSize/2 >= player.playerY && enemy.enemyY <= player.playerY+player.playerHeight && enemy.enemyX <= player.playerX + player.playerWidth && enemy.enemyX + enemy.enemySize >= player.playerX
+    
+    //if(player.playerX+player.playerWidth<enemy.enemyX&&player.playerX>enemy.enemyX+enemy.enemySize&&player.playerY>enemy.enemyY&&player.playerY+player.playerHeight<enemy.enemyY+enemy.OneBlockSize     
+        ){
+        alert(`You lose!`);
+        //clearInterval(Render);
+    }
+}
+//&&!enemy.right
+//||player.playerX<enemy.enemyX&&enemy.right
 
 window.addEventListener("keydown", playerPosition)
 
