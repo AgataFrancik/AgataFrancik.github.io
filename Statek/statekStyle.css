@@ -1,10 +1,10 @@
-.body{
+body{
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: black;
 }
-.canvas{
+canvas{
     position: absolute;
     top: 0;
     left: 0;

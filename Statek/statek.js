@@ -16,6 +16,27 @@ Game = {
     init: function(){
         Game.canvas = document.createElement('canvas');
         Game.ctx = Game.canvas.getContext('2d');
+        Game.layout();
+        window.addEventListener('resize', Game.layout);
         document.body.appendChild(Game.canvas);
+        Game.animationLoop();
+    },
+    layout: function(ev){
+        VAR.W = window.innerWidth;
+        VAR.H = window.innerHeight;
+        VAR.d = Math.min(VAR.W, VAR.H);
+        Game.canvas.height = VAR.H;
+        Game.canvas.width = VAR.W;
+        Game.ctx.strokeStyle = 'white';
+        Game.ctx.fillStyle = 'white';
+        Game.ctx.lineWidth = 3;
+        Game.ctx.lineJoin = 'white';
+    },
+    animationLoop: function(time){
+        requestAnimationFrame(Game.animationLoop);
+        if(time - VAR.lastTime >= 1000/VAR.fps){
+            VAR.lastTime = time;
+            Game.ctx.clearRect(0,0,VAR.w, VAR.H);
+        }
     }
 }
