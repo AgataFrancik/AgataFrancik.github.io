@@ -19,6 +19,7 @@ Game = {
         Game.layout();
         window.addEventListener('resize', Game.layout);
         document.body.appendChild(Game.canvas);
+        Game.ship = new Ship();
         Game.animationLoop();
     },
     layout: function(ev){
@@ -37,6 +38,7 @@ Game = {
         if(time - VAR.lastTime >= 1000/VAR.fps){
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.w, VAR.H);
+            Game.ship.draw();
         }
     }
 }
