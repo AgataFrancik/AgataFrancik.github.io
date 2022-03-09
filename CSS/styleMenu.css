@@ -73,7 +73,7 @@ body{
 }
 #MainMenu{
     width: 75%;
-    height: 600px;
+    height: 650px;
     border-radius: 15px;
     background-color: rgb(111, 134, 134);
     margin-left: auto;
@@ -83,6 +83,7 @@ body{
     text-align: center;
     font-size: 60px;
     text-shadow: 1px 1px 5px black;
+    
 }
 .link{
     text-decoration: none;
@@ -90,6 +91,7 @@ body{
 }
 #Text{
     width: 90%;
+    max-height: 10%;
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -98,10 +100,33 @@ body{
     background-color: rgb(83, 100, 100);
     font-size: 40px;
     text-shadow: none;
+    padding: 15px;
+}
+#TextHobby{
+    flex-grow: 1;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
+    background-color: rgb(83, 100, 100);
+    font-size: 35px;
+    text-shadow: none;
+    padding: 15px;
+}
+#img{
+    min-width: 30%;
+    max-width: 35%;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: auto;
+    background-color: black;
 }
 #MainMenuHobby{
     width: 75%;
-    height: 800px;
+    height: 900px;
     border-radius: 15px;
     background-color: rgb(111, 134, 134);
     margin-left: auto;
@@ -111,4 +136,26 @@ body{
     text-align: center;
     font-size: 60px;
     text-shadow: 1px 1px 5px black;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+}
+#container{
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    display: flex;
+    justify-content: space-between;
+}
+#footer{
+    text-align: center;
+    color: rgb(41, 41, 41);
+    font-size: 20px;
+    margin-top: 10px;
+}
+#Title{
+    margin-top: -10px;
+    justify-content: center;
+    align-items: center;
+    
 }

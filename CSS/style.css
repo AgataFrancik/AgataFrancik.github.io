@@ -19,10 +19,10 @@ a.tilelink:hover{
 	background-color: rgb(175, 34, 62);
 }
 .button{
-	width: auto;
+	width: 30%;
     height: 50px;
     text-align: center;
-    margin-left: 50%;
+    margin-left: 437px;
     margin-top: 15px;
     background-color: crimson;
 }
