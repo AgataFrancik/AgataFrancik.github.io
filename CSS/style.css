@@ -1,7 +1,7 @@
 body
 {
 	background-color: #393c40;
-	color: #e5e7e9;
+	color: #bd9f3e;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 20px;
 }
@@ -19,10 +19,10 @@ a.tilelink:hover{
 	background-color: rgb(175, 34, 62);
 }
 .button{
-	width: 30%;
+	width: auto;
     height: 50px;
     text-align: center;
-    margin-left: 437px;
+    margin-left: 50%;
     margin-top: 15px;
     background-color: crimson;
 }
@@ -35,8 +35,9 @@ a.tilelink:hover{
 	width: 365px;
     height: 125px;
     text-align: center;
-    margin-left: 437px;
+    margin-left: 33%;
     margin-top: 30px;
+	margin-bottom: 5%;
 }
 .Title
 {
@@ -44,14 +45,19 @@ a.tilelink:hover{
 	margin-right:auto;
     font-size: 70px;
     text-align: center;
-	margin-bottom: 40px;
+	margin-bottom: 3%;
 	font-family: 'Teko', sans-serif;
 }
 #container
 {
-	width: 1250px;
+	position: relative;
+	border-radius: 10%;
+	border: solid #9e7f17;
+	border-width: 10px;
+	width: 75%;
 	margin-left: auto;
 	margin-right:auto;
+	margin-top: 5%;
 	background-color: #53565a;
 	
 }
