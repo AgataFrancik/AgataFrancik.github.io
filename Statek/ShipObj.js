@@ -11,7 +11,24 @@ function Ship(){
     this.maxmod = 0.019;
     this.points = [{},{},{}];
 }
+Ship.prototype.hitTest = function(){
+    for(var i=0; i<this.points.length;i++)
+    {
+        for (var r in Rock.all){
+            if(Rock.all[r].hitTest(this.points[i].x, this.points[i].y)){
+                Rock.all[r].remove();
+                return true;
+            }  
+        }
+    }
+    return false;
+}
 Ship.prototype.draw = function(){
+    if(!this.destroyed){
+    if(this.hitTest()){
+        this.destroyed = true;
+        Game.stop();
+    }else{
     if(Game.key_37 || Game.key_39){
         this.a = this.a + 7*(Game.key_37 ? -1:1);
     }
@@ -61,5 +78,7 @@ Ship.prototype.draw = function(){
         this.y += VAR.H - Math.min(this.points[0].y, this.points[1].y, this.points[2].y)*0.9;
     }else if(this.points[0].y > VAR.H && this.points[1].y>VAR.H && this.points[2].y>VAR.H ){
         this.y -= VAR.H - (VAR.H - Math.min(this.points[0].y, this.points[1].y, this.points[2].y))*0.9;
+    }
+}
     }
 }
