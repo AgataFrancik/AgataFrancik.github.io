@@ -35,6 +35,8 @@ Game = {
                     Game.key_39 =false;
                 } else if(event.keyCode == 39){
                     Game.key_37 =false;
+                } else if(event.keyCode == 32){
+                    new Bullet(); 
                 }
             } else if(event.type == 'keyup'){
                 Game['key_'+event.keyCode]=false;
@@ -58,6 +60,7 @@ Game = {
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.W, VAR.H);
             Game.ship.draw();
+            Bullet.draw();
         }
     }
 }
