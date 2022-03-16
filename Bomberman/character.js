@@ -62,3 +62,21 @@ function Hero(){
 }
 Hero.prototype = new Character(true);
 Hero.prototype.constructor = Hero;
+
+function Enemy(){
+    Character.call(this);
+    this.state = 'right_go';
+    this.states = {
+        'down':{sx:0, sy: 72, f:[0]},
+        'down_go':{sx:0, sy: 72, f:[0,1,0,2]},
+        'left':{sx:63, sy: 24, f:[0]},
+        'left_go':{sx:63, sy: 24, f:[0,1,0,2]},
+        'up':{sx:63, sy: 72, f:[0]},
+        'up_go':{sx:63, sy: 72, f:[0,1,0,2]},
+        'right':{sx:63, sy: 24, f:[0]},
+        'right_go':{sx:63, sy: 24, f:[0,1,0,2], flip: true},
+        'ko': {sx:0, sy: 96, f:[0,1,2,3,4,5]}
+    }
+}
+Enemy.prototype = new Character(true);
+Enemy.prototype.constructor = Enemy;

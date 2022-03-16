@@ -23,7 +23,9 @@ Game = {
         document.body.appendChild(Game.canvas);
 
         Game.toDraw = {};
-        Game.hero = new Hero();
+        Game.board = new Board();
+        //Game.hero = new Hero();
+        //new Enemy();
         Game.animationLoop();
     },
     layout: function(ev){
@@ -41,6 +43,9 @@ Game = {
         if(time-VAR.lastTime>=1000/VAR.fps){
             VAR.lastTime = time;
             Game.ctx.clearRect(0,0,VAR.W, VAR.H);
+
+            Game.board.draw();
+
             for(var o in Game.toDraw){
                 Game.toDraw[o].draw();
             }
