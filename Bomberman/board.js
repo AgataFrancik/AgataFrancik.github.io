@@ -38,8 +38,10 @@ Board.elements = {
 function Board(){
     this.fW = 16;
     this.fH = 16;
-    this.b = this.parse(Board.templates[VAR.rand(0, Board.templates.length-1)]);
-
+    this.parse(Board.templates[VAR.rand(0, Board.templates.length-1)]);
+    for(var i=0; i<20;i++){
+        this.addCrate();
+    }
 }
 Board.prototype.draw = function(){
     for(var i=0;i<this.b.length;i++){
@@ -58,13 +60,26 @@ Board.prototype.draw = function(){
         }
     }
 }
+Board.prototype.getEmptySpace = function(){
+    return this.emptySpaces.length> 0 ? this.emptySpaces.shift():null;
+};
+Board.prototype.addCrate = function(){
+    var pos = this.getEmptySpace();
+    if(pos){
+        this.b[pos.y][pos.x] = Board.elements.box;
+    }
+};
 Board.prototype.parse = function(arr){
-    var new_arr = [];
+    this.emptySpaces = [];
+    this.b = [];
     for(var i=0; i<arr.length;i++){
-        new_arr.push([]);
+        this.b.push([]);
         for(var j=0; j<arr[i].length;j++){
-            new_arr[i].push(Board.elements[arr[i].charAt(j) ==' '? 'floor':arr[i].charAt(j)]);
+            this.b[i].push(Board.elements[arr[i].charAt(j) ==' '? 'floor':arr[i].charAt(j)]);
+            if(this.b[i][j].type=='empty' && !(i==1&&j==1)&& !(i==2&&j==1)&& !(i==1&&j==2)){
+                this.emptySpaces.push({x: j,y: i});
+            }
         }
     }
-    return new_arr;
+    this.emptySpaces = VAR.shuffle(this.emptySpaces);
 };

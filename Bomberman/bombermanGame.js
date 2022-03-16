@@ -11,6 +11,18 @@ VAR = {
     lastTime: 0,
     rand: function(min, max){
         return Math.floor(Math.random()*(max-min+1))+min;
+    },
+    shuffle: function(arr){
+        var counter = arr.length;
+        var tmp, index;
+        while(counter>0){
+            counter--;
+            index = Math.floor(Math.random()*counter);
+            tmp = arr[counter];
+            arr[counter]=arr[index];
+            arr[index] = tmp;
+        }
+        return arr;
     }
 }
 
