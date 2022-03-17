@@ -36,9 +36,31 @@ Game = {
         document.body.appendChild(Game.canvas);
 
         Game.toDraw = {};
-        //Game.hero = new Hero();
+        Game.hero = new Hero();
+        window.addEventListener("keydown",Game.onKey, false);
+        window.addEventListener("keyup",Game.onKey, false);
         //new Enemy();
         Game.animationLoop();
+    },
+    onKey: function(ev){
+        if((ev.keyCode>=37 && ev.keyCode<=40)|| ev.keyCode == 32){
+            ev.preventDefault();
+            if(ev.type=='keydown' && !Game['key_'+ev.keyCode])
+            {
+                Game['key_'+ev.keyCode] = true;
+                if(ev.keyCode>=37 && ev.keyCode<=40){
+                    for(var i=37;i<40;i++){
+                        if(i!=ev.keyCode){
+                            Game['key_'+i]=false;
+                        }
+                    }
+                }
+                Game.hero.updateState();
+            }else if(ev.type=='keyup'){
+                Game['key_'+ev.keyCode]=false;
+                Game.hero.updateState();
+            }
+        }
     },
     layout: function(ev){
         VAR.W = window.innerWidth;

@@ -9,6 +9,11 @@ function Character(inheritance){
 
     this.fW = 21;
     this.fH = 24;
+
+    this.speed = 2;
+
+    this.modX = -2;
+    this.modY = -8;
     //this.start_x = 0;
     //this.start_y = 0;
 
@@ -19,6 +24,15 @@ function Character(inheritance){
     this.change_f_delay = 0;
 }
 Character.prototype.draw = function(){
+    if(this.state=='down_go'){
+        this.y += this.speed;
+    } else if(this.state=='right_go'){
+        this.x += this.speed;
+    }else if(this.state=='left_go'){
+        this.x -= this.speed;
+    } else if(this.state=='up_go'){
+        this.y -= this.speed;
+    }
     if(this.states[this.state].flip){
         Game.ctx.save();
         Game.ctx.scale(-1,1);
@@ -29,8 +43,8 @@ Character.prototype.draw = function(){
         this.states[this.state].sy,
         this.fW,
         this.fH,
-        this.states[this.state].flip ? -this.fW*VAR.scale:0,
-        0,
+        this.states[this.state].flip ? (-this.fW-this.modX-this.x)*VAR.scale: (this.x +this.modX)*VAR.scale,
+        (this.y + this.modY)*VAR.scale,
         this.fW*VAR.scale,
         this.fH*VAR.scale
     );
@@ -47,7 +61,7 @@ Character.prototype.draw = function(){
 }
 function Hero(){
     Character.call(this);
-    this.state = 'right_go';
+    this.state = 'down';
     this.states = {
         'down':{sx:0, sy: 0, f:[0]},
         'down_go':{sx:0, sy: 0, f:[0,1,0,2]},
@@ -58,10 +72,31 @@ function Hero(){
         'right':{sx:63, sy: 0, f:[0]},
         'right_go':{sx:63, sy: 0, f:[0,1,0,2], flip: true},
         'ko': {sx:0, sy: 48, f:[0,1,0,1,0,1,2,3,4]}
-    }
+    };
+    this.x = Game.board.fW;
+    this.y = Game.board.fH;
 }
 Hero.prototype = new Character(true);
 Hero.prototype.constructor = Hero;
+
+Hero.prototype.updateState = function(){
+    this.tmp_state = null;
+    if(Game.key_37){
+        this.tmp_state = 'left_go';
+    } else if(Game.key_38){
+        this.tmp_state = 'up_go';
+    } else if(Game.key_39){
+        this.tmp_state = 'right_go';
+    } else if(Game.key_40){
+        this.tmp_state = 'down_go';
+    } else if(this.state.slice(-2)=='go'){
+        this.tmp_state = this.state.slice(0, this.state.indexOf('_go'));
+    }
+    if(this.state != this.tmp_state){
+        this.current_frame = 0;
+        this.state = this.tmp_state;
+    }
+}
 
 function Enemy(){
     Character.call(this);
