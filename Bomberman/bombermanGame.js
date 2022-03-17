@@ -49,7 +49,7 @@ Game = {
             {
                 Game['key_'+ev.keyCode] = true;
                 if(ev.keyCode>=37 && ev.keyCode<=40){
-                    for(var i=37;i<40;i++){
+                    for(var i=37;i<=40;i++){
                         if(i!=ev.keyCode){
                             Game['key_'+i]=false;
                         }

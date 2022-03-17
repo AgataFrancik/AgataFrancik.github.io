@@ -24,7 +24,9 @@ function Character(inheritance){
     this.change_f_delay = 0;
 }
 Character.prototype.draw = function(){
-    if(this.state=='down_go'){
+    if(this.state.slice(-2)=='go')
+    {
+        if(this.state=='down_go'){
         this.y += this.speed;
     } else if(this.state=='right_go'){
         this.x += this.speed;
@@ -33,6 +35,8 @@ Character.prototype.draw = function(){
     } else if(this.state=='up_go'){
         this.y -= this.speed;
     }
+    this.rowAndColumn();
+}
     if(this.states[this.state].flip){
         Game.ctx.save();
         Game.ctx.scale(-1,1);
@@ -59,6 +63,37 @@ Character.prototype.draw = function(){
     this.current_frame = this.current_frame+1 >= this.states[this.state].f.length ? 0 : this.current_frame+1;
     }
 }
+Character.prototype.rowAndColumn = function(){
+    this.row = Math.round(this.y/Game.board.fH);
+    this.column = Math.round(this.x/Game.board.fW);
+    if(this.state.slice(-2)=='go'){
+        if(this.state =='left_go'|| this.state =='right_go'){
+            this.next_row = this.row;
+            this.next_column = this.state == 'left_go'?Math.floor(this.x/Game.board.fW):Math.ceil(this.x/Game.board.fW);
+        } else {
+            this.next_column = this.column;
+            this.next_row = this.state == 'up_go'?Math.floor(this.y/Game.board.fH):Math.ceil(this.y/Game.board.fH);
+        }
+        if(!(this.row==this.next_row && this.column==this.next_column) && Game.board.b[this.next_row][this.next_column].type!='empty'){
+            this.state = this.state.slice(0,-3);
+            this.current_frame = 0;
+            if(this.row != this.next_row){
+                this.y = this.row*Game.board.fH;
+            }else{
+                this.x = this.column*Game.board.fW;
+            }
+        }else{
+            if(this.row!= this.next_row){
+                this.x = this.column*Game.board.fW;
+            }else if(this.column!=this.next_column){
+                this.y = this.row*Game.board.fH;
+            }
+        }
+    }else{
+        this.next_row = this.row;
+        this.next_column = this.column;
+    }
+}
 function Hero(){
     Character.call(this);
     this.state = 'down';
@@ -80,7 +115,7 @@ Hero.prototype = new Character(true);
 Hero.prototype.constructor = Hero;
 
 Hero.prototype.updateState = function(){
-    this.tmp_state = null;
+    this.tmp_state = this.state;
     if(Game.key_37){
         this.tmp_state = 'left_go';
     } else if(Game.key_38){
