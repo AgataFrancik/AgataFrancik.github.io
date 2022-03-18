@@ -132,10 +132,11 @@ Hero.prototype.updateState = function(){
         this.state = this.tmp_state;
     }
 }
-
-function Enemy(){
+Enemy.all ={};
+function Enemy(x,y){
     Character.call(this);
-    this.state = 'right_go';
+    this.state = 'down';
+    Enemy.all[this.id]=this;
     this.states = {
         'down':{sx:0, sy: 72, f:[0]},
         'down_go':{sx:0, sy: 72, f:[0,1,0,2]},
@@ -147,6 +148,48 @@ function Enemy(){
         'right_go':{sx:63, sy: 24, f:[0,1,0,2], flip: true},
         'ko': {sx:0, sy: 96, f:[0,1,2,3,4,5]}
     }
+    this.x = x;
+    this.y = y;
+    this.rowAndColumn();
+    this.setDirection();
 }
 Enemy.prototype = new Character(true);
 Enemy.prototype.constructor = Enemy;
+Enemy.prototype.parent = Character.prototype;
+
+Enemy.prototype.setDirection = function(){
+    this.canGo = this.canGo || [];
+    this.canGo.length = 0;
+    for(var i=this.column-1;i<=this.column+1;i++){
+        for(var j=this.row-1;j<=this.row+1;j++){
+            if(!(i==this.column&&j==this.row)){
+                if(i==this.column || j==this.row){
+                    if(Game.board.b[j][i].type == 'empty'){
+                        this.canGo.push({x: i,y:j});
+                    }
+                }
+            }
+        }
+    }
+    if(this.canGo.length>0){
+        this.tmp_pos = this.canGo[VAR.rand(0, this.canGo.length-1)];
+        if(this.column<this.tmp_pos.x){
+            this.state = 'right_go';
+        }else if(this.column>this.tmp_pos.x){
+            this.state = 'left_go';
+        }else if(this.row < this.tmp_pos.y){
+            this.state = 'down_go';
+        }else if(this.row > this.tmp_pos.y){
+            this.state = 'up_go';
+        }
+    }else if(this.state.slice(-2)=='go'){
+        this.state=this.state.slice(0,-3);
+    }
+}
+Enemy.prototype.rowAndColumn = function(){
+    this.prev_state = this.state;
+    this.parent.rowAndColumn.call(this);
+    if(this.state!=this.prev_state && this.state.slice(-2)!="go"&& this.prev_state.slice(-2)=='go'){
+        this.setDirection();
+    }
+}
