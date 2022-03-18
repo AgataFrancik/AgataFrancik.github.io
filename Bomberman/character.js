@@ -110,6 +110,7 @@ function Hero(){
     };
     this.x = Game.board.fW;
     this.y = Game.board.fH;
+    this.rowAndColumn();
 }
 Hero.prototype = new Character(true);
 Hero.prototype.constructor = Hero;
