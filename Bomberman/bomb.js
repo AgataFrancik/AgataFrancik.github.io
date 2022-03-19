@@ -13,7 +13,7 @@ Bomb.elements ={
     'left_bum_end': {sx: 126, sy: 32, f:[0,0,1,1,2,2,3,3,2,2,1,1,0,0]},
 }
 function Bomb(column, row, bum_type){
-    if((Bomb.count<Bomb.max_count && Game.board.b[row][column].type!='bomb')|| bum_type){
+    if((Bomb.count<Bomb.max_count && Game.board.b[row][column].sub_type!='bomb' && !bum_type) || (bum_type && Game.board.b[row][column].sub_type=='board' && (!Game.board.b[row][column].bum_type))){
         if(!bum_type){
             Bomb.count++;
         }
@@ -75,6 +75,7 @@ Bomb.prototype.draw = function(){
         this.type='empty';
         this.current_f = 0;
         this.data = Bomb.elements.center;
+        this.bum_type = 'center';
         this.timer = this.data.f.length;
 
         this.bums = [];
@@ -97,12 +98,16 @@ Bomb.prototype.draw = function(){
             for(var j=0; j<this.range;j++){
                 this[this.axis] = this[this.axis]+(this.grow?1:-1);
                 if(Game.board.b[this.tmp_row][this.tmp_colum].type != 'solid'){
-                    this.tmp_crate = Game.board.b[this.tmp_row][this.tmp_colum].type == 'soft';
-                    new Bomb(this.tmp_colum, this.tmp_row, this.tmp_bum_type+(j==this.range-1 ? '_end':''));
-                    if(this.tmp_crate){
+                    if(Game.board.b[this.tmp_row][this.tmp_colum].ko_obj){
+                        new window[Game.board.b[this.tmp_row][this.tmp_colum].ko_obj](this.tmp_colum, this.tmp_row);
                         break;
+                    }else{
+                    new Bomb(this.tmp_colum, this.tmp_row, this.tmp_bum_type+(j==this.range-1 ? '_end':''));
                     }
-                }else{
+                }else if(Game.board.b[this.tmp_row][this.tmp_colum].sub_type =='bomb'&& !Game.board.b[this.tmp_row][this.tmp_colum].bum_type){
+                    Game.board.b[this.tmp_row][this.tmp_colum].timer = 0;
+                }
+                else{
                     break;
                 }
             }

@@ -29,10 +29,10 @@ Board.templates = [
 
 ];
 Board.elements = {
-    'floor':{sx: 174, sy: 16, type: 'empty'},
-    'W':{sx: 190, sy: 16, type: 'solid'},
-    'X':{sx: 206, sy: 16, type: 'solid'},
-    'box':{sx: 126, sy: 0, type: 'soft'},
+    'floor':{sx: 174, sy: 16, type: 'empty', sub_type: 'board'},
+    'W':{sx: 190, sy: 16, type: 'solid', sub_type: 'board'},
+    'X':{sx: 206, sy: 16, type: 'solid', sub_type: 'board'},
+    'box':{sx: 126, sy: 0, type: 'soft', sub_type: 'board', ko_obj: 'Crate'},
 
 };
 function Board(){
@@ -57,7 +57,7 @@ Board.prototype.draw = function(){
                 this.fW*VAR.scale,
                 this.fH*VAR.scale
             );
-            if(this.b[i][j].sub_type == 'bomb'){
+            if(this.b[i][j].sub_type != 'board'){
                 this.b[i][j].draw();
             }
         }
