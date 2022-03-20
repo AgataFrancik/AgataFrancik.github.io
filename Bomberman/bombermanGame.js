@@ -47,6 +47,10 @@ Game = {
         //new Enemy();
         Game.animationLoop();
     },
+    stop: function(){
+        window.removeEventListener("keydown",Game.onKey, false);
+        window.removeEventListener("keyup",Game.onKey, false);
+    },
     onKey: function(ev){
         if((ev.keyCode>=37 && ev.keyCode<=40)|| ev.keyCode == 32){
             ev.preventDefault();

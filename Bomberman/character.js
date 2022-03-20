@@ -36,7 +36,10 @@ Character.prototype.draw = function(){
         this.y -= this.speed;
     }
     this.rowAndColumn();
-}
+    }
+    if(Game.board.b[this.row][this.column].sub_type == 'bomb' && Game.board.b[this.row][this.column].bum_type){
+        this.setKO();
+    }
     if(this.states[this.state].flip){
         Game.ctx.save();
         Game.ctx.scale(-1,1);
@@ -60,7 +63,11 @@ Character.prototype.draw = function(){
         this.change_f_delay++;
     } else{
         this.change_f_delay=0;
-    this.current_frame = this.current_frame+1 >= this.states[this.state].f.length ? 0 : this.current_frame+1;
+        if(this.state=='ko'&& this.current_frame == this.states[this.state].f.length-1){
+            this.afterKO();
+        }else{
+            this.current_frame = this.current_frame+1 >= this.states[this.state].f.length ? 0 : this.current_frame+1;
+        }
     }
 }
 Character.prototype.rowAndColumn = function(){
@@ -94,6 +101,13 @@ Character.prototype.rowAndColumn = function(){
         this.next_column = this.column;
     }
 }
+Character.prototype.setKO = function(){
+    this.state = 'ko';
+}
+Character.prototype.afterKO = function(){
+    delete Game.toDraw[this.id];
+
+}
 function Hero(){
     Character.call(this);
     this.state = 'down';
@@ -114,6 +128,8 @@ function Hero(){
 }
 Hero.prototype = new Character(true);
 Hero.prototype.constructor = Hero;
+Hero.prototype.parent = Character.prototype;
+
 
 Hero.prototype.updateState = function(){
     this.tmp_state = this.state;
@@ -131,6 +147,16 @@ Hero.prototype.updateState = function(){
     if(this.state != this.tmp_state){
         this.current_frame = 0;
         this.state = this.tmp_state;
+    }
+}
+Hero.prototype.setKO = function(){
+    this.parent.setKO.call(this);
+    Game.stop();
+}
+Hero.prototype.afterKO = function(){
+    if(!Game.is_over){
+        Game.is_over = true;
+        console.log('Game over!');
     }
 }
 Enemy.all ={};
@@ -192,5 +218,17 @@ Enemy.prototype.rowAndColumn = function(){
     this.parent.rowAndColumn.call(this);
     if(this.state!=this.prev_state && this.state.slice(-2)!="go"&& this.prev_state.slice(-2)=='go'){
         this.setDirection();
+    }
+}
+Enemy.prototype.afterKO = function(){
+    this.parent.afterKO.call(this);   
+    delete Enemy.all[this.id];
+    var some_enemy = false;
+    for(var e in Enemy.all){
+        some_enemy = true;
+        break;
+    }
+    if(!some_enemy){
+        console.log('Win!');
     }
 }
