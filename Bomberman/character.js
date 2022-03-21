@@ -159,6 +159,21 @@ Hero.prototype.afterKO = function(){
         console.log('Game over!');
     }
 }
+Hero.prototype.enemyHitTest = function(){
+    for(var e in Enemy.all){
+        e = Enemy.all[e];
+        if((this.row == e.row && e.x+Game.board.fW>this.x && e.x<this.x+Game.board.fW) || (this.column == e.column && e.y+Game.board.fH>this.y && e.y<this.y+Game.board.fH)){
+            return true;
+        }
+    }
+    return false;
+}
+Hero.prototype.draw = function(){
+    this.parent.draw.call(this);
+    if(this.state != 'ko' && this.enemyHitTest()){
+        this.setKO();
+    }
+}
 Enemy.all ={};
 function Enemy(x,y){
     Character.call(this);
